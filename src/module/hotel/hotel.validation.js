@@ -5,6 +5,7 @@ export const createHotel=joi.object({
     name:joi.string().min(2).max(20).required(),
     description:joi.string().min(1).max(500).required(),
     rate:joi.number().positive().min(0).max(5),
+    country:joi.string().min(2).max(20).required(),
 }).required();
 
 export const updateHotel=joi.object({
