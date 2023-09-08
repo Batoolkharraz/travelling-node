@@ -1,6 +1,7 @@
 import authRouter from './auth/auth.router.js';
 import userRouter from './user/user.router.js';
 import countryRouter from './country/country.router.js';
+import hotelRouter from './hotel/hotel.router.js';
 import { globalErrorHandel } from '../Services/errorHandling.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -20,6 +21,7 @@ const initApp=(app,express)=>{
     app.use('/auth',authRouter);
     app.use('/user',userRouter);
     app.use('/country',countryRouter);
+    app.use('/hotel',hotelRouter);
     app.use('*',(req,res)=>{
         return res.json({message:"page not found"});
     })
