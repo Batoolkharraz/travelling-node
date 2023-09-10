@@ -9,13 +9,14 @@ const router = Router();
 
 
 router.post('/',auth(endPoint.createHotel),validation(validators.createHotel),hotelCont.createHotel);
-/*
-router.patch('/updateCountry/:countryId',auth(endPoint.updateCountry),validation(validators.updateCountry),countryCont.updateCountry)
-router.get('/',auth(endPoint.getAllCountry),countryCont.getAllCountry)
-router.get('/:countryId',auth(endPoint.getCountry),validation(validators.getCountry),countryCont.getCountry);
 
-router.delete('/:countryId',auth(endPoint.deleteCountry),validation(validators.deleteCountry),countryCont.deleteCountry);
-router.patch('/:countryId',auth(endPoint.softDeleteCountry),validation(validators.softDeleteCountry),countryCont.softDeleteCountry);
-router.patch('/reStoreCountry/:countryId',auth(endPoint.reStoreCountry),validation(validators.reStoreCountry),countryCont.reStoreCountry);
-*/
+router.patch('/updateHotel/:hotelId',auth(endPoint.updateHotel),validation(validators.updateHotel),hotelCont.updateHotel)
+
+router.get('/',auth(endPoint.getAllHotel),hotelCont.getAllHotels)
+router.get('/:hotelId',auth(endPoint.getHotel),validation(validators.getHotel),hotelCont.getHotel);
+
+router.delete('/:hotelId',auth(endPoint.deleteHotel),validation(validators.deleteHotel),hotelCont.deleteHotel);
+router.patch('/:hotelId',auth(endPoint.softDeleteHotel),validation(validators.softDeleteHotel),hotelCont.softDeleteHotel);
+router.patch('/reStoreHotel/:hotelId',auth(endPoint.reStoreHotel),validation(validators.reStoreHotel),hotelCont.reStoreHotel);
+
 export default router;

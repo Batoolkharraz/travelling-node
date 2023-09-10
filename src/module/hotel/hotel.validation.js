@@ -9,24 +9,25 @@ export const createHotel=joi.object({
 }).required();
 
 export const updateHotel=joi.object({
-    countryId:generalFeilds.id,
+    hotelId:generalFeilds.id,
     name:joi.string().min(2).max(20),
     description:joi.string().min(1).max(500),
     rate:joi.number().positive().min(0).max(5),
+    country:joi.string().min(2).max(20),
 }).required();
 
 export const getHotel = joi.object({
-    countryId:generalFeilds.id,
+    hotelId:generalFeilds.id,
 }).required();
 
 export const deleteHotel = joi.object({
-    countryId:generalFeilds.id,
+    hotelId:generalFeilds.id,
 }).required();
 
 export const softDeleteHotel = joi.object({
-    countryId:generalFeilds.id,
+    hotelId:generalFeilds.id,
 }).required();
 
 export const reStoreHotel = joi.object({
-    countryId:generalFeilds.id,
+    hotelId:generalFeilds.id,
 }).required();
