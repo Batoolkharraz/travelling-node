@@ -1,44 +1,25 @@
+import bookingModel from "../../../../DB/model/booking.model.js";
 import countryModel from "../../../../DB/model/country.model.js";
 import hotelModel from "../../../../DB/model/hotel.model.js";
 import tripModel from "../../../../DB/model/trip.model.js";
 import { asyncHandler } from "../../../Services/errorHandling.js";
 
-export const createTrip=asyncHandler(async (req,res,next)=>{
+export const makeBooking=asyncHandler(async (req,res,next)=>{
  
-    const {name,description,capacity,maxCapacity,rate,country,hotel}=req.body;
-    let date=new Date(req.body.date);
-    let now = new Date();
-    if(now.getTime()>=date.getTime()){
-        return next (new Error('invalid date',{cause:400}));
+    const trip=await tripModel.findById(req.params.tripId);
+    if(!trip){
+        return next(new Error(`There is no trip with this ID`,{cause:409}));
     }
-    req.body.date=date;
-
-    if(await tripModel.findOne({name})){
-        return next(new Error(`duplicateed Trip ${name}`,{cause:409}));
+    let booking=await bookingModel.findOne(req.params.tripId);
+    if(booking){
+        await bookingModel.updateOne({_id:booking.tripId},{
+            $pull:{bookedBy:req.user._id}
+        })
     }
-
-    const Country = await countryModel.findOne({name:country});
-    if(!Country){
-        return next(new Error(`Please check the name of the country`,{cause:409}));
+    else{
+        booking=await bookingModel.create({tripId:req.params.tripId},{$pull:{bookedBy:req.user._id}});
     }
-    req.body.countryId=Country._id;
-
-    const Hotel = await hotelModel.findOne({name:hotel});
-    if(!Hotel){
-        return next(new Error(`Please check the name of the country`,{cause:409}));
-    }
-
-    /*if(Hotel.countryId!=Country._id){
-        return next(new Error(`This hotel is not in this country`,{cause:409}));
-    }*/
-    req.body.hotelId=Hotel._id;
-
-    if(capacity>maxCapacity){
-        return next(new Error(`Please check the Capacity again`,{cause:400}));
-    }
-
-    const trip=await tripModel.create(req.body);
-    return res.status(201).json({message:"success",trip});
+    return res.status(201).json({message:"success",booking});
 
 })
 
@@ -140,3 +121,18 @@ export const reStoreTrip=asyncHandler(async (req,res,next)=>{
     await tripModel.findByIdAndUpdate(req.params.tripId,{isDeleted:false});
     return res.status(200).json({message:"success"})
 })
+
+export const updateOrderStatusFromAdmin=asyncHandler(async (req,res,next)=>{
+    const {orderId}=req.params;
+    const {status}=req.body;
+    const order =await orderModel.findOne({_id:orderId});
+    if(!order|| order.status=='delevered'){
+        return next(new Error(`this order not found or this order status is : ${order.status}`));
+    }
+    const changeOrderStatus=await orderModel.updateOne({_id:orderId},{status,updatedBy:req.user._id});
+    
+    if(!changeOrderStatus.matchedCount){
+        return next(new Error(`fail to change status this order`,{cause:400}));
+    }
+    return res.status(201).json({message:"success"});
+}) 

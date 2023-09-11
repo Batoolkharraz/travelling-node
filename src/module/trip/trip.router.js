@@ -10,7 +10,7 @@ const router = Router();
 
 router.post('/',auth(endPoint.createTrip),validation(validators.createTrip),tripCont.createTrip);
 router.patch('updateTrip/:tripId',auth(endPoint.updateTrip),validation(validators.updateTrip),tripCont.updateTrip)
-router.get('/',auth(endPoint.getAllTrip),countryCont.getAllTrip)
+router.get('/',auth(endPoint.getAllTrip),tripCont.getAllTrip)
 router.get('/:tripId',auth(endPoint.getTrip),validation(validators.getTrip),tripCont.getTrip);
 
 router.delete('/:tripId',auth(endPoint.deleteTrip),validation(validators.deleteTrip),tripCont.deleteTrip);
