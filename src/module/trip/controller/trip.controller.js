@@ -67,7 +67,7 @@ export const updateTrip=asyncHandler(async (req,res,next)=>{
         if(req.body.capacity>trip.maxCapacity){
             return next (new Error ("invalid new capacity is larger than maximam capacity"));
         }
-        trip.maxCapacity=req.body.maxCapacity;
+        trip.capacity=req.body.capacity;
     }
     if(req.body.rate){
         trip.rate=req.body.rate;
@@ -90,7 +90,7 @@ export const updateTrip=asyncHandler(async (req,res,next)=>{
     if(req.body.hotel){
         const Hotel = await hotelModel.findOne({name:req.body.hotel});
         if(!Hotel){
-            return next(new Error(`Please check the name of the country`,{cause:409}));
+            return next(new Error(`Please check the name of the hotel`,{cause:409}));
         }
         trip.hotelId=Hotel._id;
     }
@@ -100,11 +100,20 @@ export const updateTrip=asyncHandler(async (req,res,next)=>{
 
 export const getTrip=asyncHandler(async (req,res,next)=>{
     const trip= await tripModel.findById(req.params.tripId);
+    
+    if(!trip||trip.isDeleted=='true'){
+        return next(new Error("trip not found"));
+    }
     return res.status(200).json({message:"success",trip})
 })
 
 export const getAllTrip=asyncHandler(async (req,res,next)=>{
-    const trips= await tripModel.find();
+    const trips= await tripModel.find({isDeleted:false});
+
+    if(!trips){
+        return next(new Error("no trip have been added yet"));
+    }
+
     return res.status(200).json({message:"success",trips})
 })
 
