@@ -7,14 +7,14 @@ import auth from "../../MiddleWare/auth.middleware.js";
 
 const router = Router();
 
-/*
-router.post('/',auth(endPoint.createCountry),validation(validators.createCountry),countryCont.createCountry);
-router.patch('/updateCountry/:countryId',auth(endPoint.updateCountry),validation(validators.updateCountry),countryCont.updateCountry)
-router.get('/',auth(endPoint.getAllCountry),countryCont.getAllCountry)
-router.get('/:countryId',auth(endPoint.getCountry),validation(validators.getCountry),countryCont.getCountry);
 
-router.delete('/:countryId',auth(endPoint.deleteCountry),validation(validators.deleteCountry),countryCont.deleteCountry);
-router.patch('/:countryId',auth(endPoint.softDeleteCountry),validation(validators.softDeleteCountry),countryCont.softDeleteCountry);
-router.patch('/reStoreCountry/:countryId',auth(endPoint.reStoreCountry),validation(validators.reStoreCountry),countryCont.reStoreCountry);
-*/
+router.post('/',auth(endPoint.createTrip),validation(validators.createTrip),tripCont.createTrip);
+router.patch('updateTrip/:tripId',auth(endPoint.updateTrip),validation(validators.updateTrip),tripCont.updateTrip)
+router.get('/',auth(endPoint.getAllTrip),countryCont.getAllTrip)
+router.get('/:tripId',auth(endPoint.getTrip),validation(validators.getTrip),tripCont.getTrip);
+
+router.delete('/:tripId',auth(endPoint.deleteTrip),validation(validators.deleteTrip),tripCont.deleteTrip);
+router.patch('/:tripId',auth(endPoint.softDeleteTrip),validation(validators.softDeleteTrip),tripCont.softDeleteTrip);
+router.patch('/reStoreTrip/:tripId',auth(endPoint.reStoreTrip),validation(validators.reStoreTrip),tripCont.reStoreTrip);
+
 export default router;

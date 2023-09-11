@@ -1,16 +1,11 @@
 
 import mongoose, {Schema,model,Types} from 'mongoose';
 const tripSchema = new Schema ({
-    name:{
-        type:String,
-        required:true,
-    },
-    description:{
-        type:String,
-    },
+    name:{type:String,required:true,},
+    description:{type:String,required:true},
     date:{type:Date,required:true},
-    capcity:{type:Number,default:0,required:true},
-    maxCapcity:{type:Number,default:0,required:true},
+    capacity:{type:Number,default:0,required:true},
+    maxCapacity:{type:Number,default:0,required:true},
     rate:{type:Number},
     countryId:{type:Types.ObjectId,ref:'Country',required:true},
     hotelId:{type:Types.ObjectId,ref:'Hotel',required:true},
