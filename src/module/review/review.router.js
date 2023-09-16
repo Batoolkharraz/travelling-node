@@ -5,6 +5,9 @@ import { endPoint } from "./review.endPoint.js";
 
 const router = Router();
 
-router.post('/:productId',auth(endPoint.create),reviewCont.createReview);
-router.patch('/:productId/:reviewId',auth(endPoint.update),reviewCont.updateReview);
+router.post('/:tripId',auth(endPoint.createReview),reviewCont.createReview);
+router.patch('/:tripId/:reviewId',auth(endPoint.updateReview),reviewCont.updateReview);
+router.get('/',auth(endPoint.getReview),reviewCont.getAllReviews);
+router.get('/:reviewId',auth(endPoint.getReview),reviewCont.getReview);
+router.delete('/:reviewId',auth(endPoint.deleteReview),reviewCont.deleteReview);
 export default router;

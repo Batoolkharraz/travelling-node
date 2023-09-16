@@ -1,17 +1,22 @@
 import joi from "joi";
 import { generalFeilds } from "../../MiddleWare/validation.js";
 
-export const createCategory=joi.object({
-    name:joi.string().min(2).max(24).required(),
-    file:generalFeilds.file.required(),
+export const createReview=joi.object({
+    tripId:generalFeilds.id,
+    comment:joi.string().min(2).max(200),
+    rating:joi.number().positive().min(0).max(5),
 }).required();
 
-export const updateCategory=joi.object({
-    categoryId:generalFeilds.id,
-    name:joi.string().min(2).max(24),
-    file:generalFeilds.file,
+export const updateReview=joi.object({
+    reviewId:generalFeilds.id,
+    comment:joi.string().min(2).max(200),
+    rating:joi.number().positive().min(0).max(5),
 }).required();
 
-export const getCategory=joi.object({
-    categoryId:generalFeilds.id,
+export const getReview=joi.object({
+    reviewId:generalFeilds.id,
+}).required();
+
+export const deleteReview=joi.object({
+    reviewId:generalFeilds.id,
 }).required();
