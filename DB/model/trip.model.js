@@ -7,6 +7,7 @@ const tripSchema = new Schema ({
     capacity:{type:Number,default:0,required:true},
     maxCapacity:{type:Number,default:0,required:true},
     rate:{type:Number},
+    price:{type:Number,required:true},
     countryId:{type:Types.ObjectId,ref:'Country',required:true},
     hotelId:{type:Types.ObjectId,ref:'Hotel',required:true},
     createdBy:{type:Types.ObjectId,ref:'User'},

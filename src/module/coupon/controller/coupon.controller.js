@@ -9,7 +9,6 @@ export const createCoupon=asyncHandler(async (req,res,next)=>{
     if(now.getTime()>=date.getTime()){
         return next (new Error('invalid date',{cause:400}));
     }
-    date=date.toLocaleDateString();
     req.body.expireDate=date;
     if(await couponModel.findOne({name})){
         return next(new Error(`duplicateed coupon name ${name}`,{cause:409}));
@@ -51,4 +50,15 @@ export const getCoupon=asyncHandler(async (req,res,next)=>{
 export const getAllCoupon=asyncHandler(async (req,res,next)=>{
     const coupons= await couponModel.find();
     return res.status(200).json({message:"success",coupons})
+})
+
+export const deleteCoupon=asyncHandler(async (req,res,next)=>{
+    const coupon= await couponModel.findById(req.params.couponId);
+
+    if(!coupon){
+        return next(new Error("coupon not found"));
+    }
+
+    await couponModel.findByIdAndDelete(req.params.couponId)
+    return res.status(200).json({message:"success"})
 })
