@@ -10,6 +10,7 @@ export const createTrip=joi.object({
     rate:joi.number().positive().min(0).max(5),
     country:joi.string().min(2).max(20).required(),
     hotel:joi.string().min(2).max(20).required(),
+    price:joi.number().positive().required(),
 
 }).required();
 
@@ -23,6 +24,7 @@ export const updateTrip=joi.object({
     rate:joi.number().positive().min(0).max(5),
     country:joi.string().min(2).max(20),
     hotel:joi.string().min(2).max(20),
+    price:joi.number().positive(),
 }).required();
 
 export const getTrip = joi.object({
