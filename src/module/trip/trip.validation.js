@@ -42,3 +42,15 @@ export const softDeleteTrip = joi.object({
 export const reStoreTrip = joi.object({
     tripId:generalFeilds.id,
 }).required();
+
+export const searchTripByCountry = joi.object({
+    country:joi.string().min(2).max(20),
+}).required();
+
+export const searchTripByPrice = joi.object({
+    price:joi.number().positive().required(),
+}).required();
+
+export const searchTripByDate = joi.object({
+    date:joi.date().required(),
+}).required();

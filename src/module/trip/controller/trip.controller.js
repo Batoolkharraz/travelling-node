@@ -115,6 +115,7 @@ export const getAllTrip=asyncHandler(async (req,res,next)=>{
     }
 
     return res.status(200).json({message:"success",trips})
+
 })
 
 export const deleteTrip=asyncHandler(async (req,res,next)=>{
@@ -148,4 +149,55 @@ export const reStoreTrip=asyncHandler(async (req,res,next)=>{
 
     await tripModel.findByIdAndUpdate(req.params.tripId,{isDeleted:false});
     return res.status(200).json({message:"success"})
+})
+
+
+export const searchTripByCountry=asyncHandler(async (req,res,next)=>{
+    /* const trips= await tripModel.find({isDeleted:false});
+ 
+     if(!trips){
+         return next(new Error("no trip have been added yet"));
+     }
+ 
+     return res.status(200).json({message:"success",trips})*/
+     const Country = await countryModel.findOne({name:req.body.country});
+     if(!Country){
+         return next(new Error(`Please check the name of the country`,{cause:409}));
+     }
+     const trips= await tripModel.find({countryId:Country._id,isDeleted:false});
+ 
+     if(!trips){
+         return next(new Error("no trip found"));
+     }
+ 
+     return res.status(200).json({message:"success",trips})
+ 
+ })
+
+export const searchTripByPrice=asyncHandler(async (req,res,next)=>{
+
+    const trips= await tripModel.find({price:{$lte:req.body.price},isDeleted:false});
+
+    if(!trips){
+        return next(new Error("no trip found"));
+    }
+
+    return res.status(200).json({message:"success",trips})
+
+})
+
+export const searchTripByDate=asyncHandler(async (req,res,next)=>{ 
+    let date=new Date(req.body.date);
+    let now = new Date();
+    if(now.getTime()>=date.getTime()){
+        return next (new Error('invalid date',{cause:400}));
+    }
+    const trips= await tripModel.find({date:{$lte:date},isDeleted:false});
+
+    if(!trips){
+        return next(new Error("no trip found"));
+    }
+
+    return res.status(200).json({message:"success",trips})
+
 })

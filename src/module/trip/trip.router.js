@@ -17,4 +17,7 @@ router.delete('/:tripId',auth(endPoint.deleteTrip),validation(validators.deleteT
 router.patch('/:tripId',auth(endPoint.softDeleteTrip),validation(validators.softDeleteTrip),tripCont.softDeleteTrip);
 router.patch('/reStoreTrip/:tripId',auth(endPoint.reStoreTrip),validation(validators.reStoreTrip),tripCont.reStoreTrip);
 
+router.get('/searchTrip',auth(endPoint.searchTrip),tripCont.searchTripByCountry);
+router.get('/searchTripByDate',auth(endPoint.searchTrip),validation(validators.searchTripByDate),tripCont.searchTripByDate);
+router.get('/searchTripByPrice/:tripId',auth(endPoint.searchTrip),validation(validators.searchTripByPrice),tripCont.searchTripByPrice);
 export default router;

@@ -8,4 +8,5 @@ export const endPoint={
     deleteTrip:[roles.superAdmin,roles.admin],
     softDeleteTrip:[roles.superAdmin,roles.admin],
     reStoreTrip:[roles.superAdmin,roles.admin],
+    searchTrip:[roles.superAdmin,roles.admin,roles.user],
 }
