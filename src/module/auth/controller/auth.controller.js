@@ -7,6 +7,7 @@ import { asyncHandler } from "../../../Services/errorHandling.js";
 import { customAlphabet } from "nanoid";
 
 export const signup =async (req,res,next)=>{
+    
     const {userName,email,password} = req.body;
     const user = await userModel.findOne({email});
     if(user){
@@ -15,10 +16,11 @@ export const signup =async (req,res,next)=>{
     let token =generateToken({email},process.env.SIGNUP_TOKEN,60*5);
     const refreshToken = generateToken({email},process.env.SIGNUP_TOKEN,60*60*24);
 
-    const link =`${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`;
-    const Rlink =`${req.protocol}://${req.headers.host}/auth/newConfirmEmail/${refreshToken}`;
-    const html = `<a href="${link}">verify email</a>  <br/> <br/> <br/> <a href="${Rlink}"> send new email </a> `
-    await sendEmail(email,'confirm email',html)
+ const link =`${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`;
+ const Rlink =`${req.protocol}://${req.headers.host}/auth/newConfirmEmail/${refreshToken}`;
+     const html = `<a href="${link}">verify email</a>  <br/> <br/> <br/> <a href="${Rlink}"> send new email </a> `
+    // const html = `<a href="${link}">verify email</a>  <br/> <br/> <br/> send new email </a> `
+     await sendEmail(email,'confirm email',html)
     const Hpassword=hash(password);
     const createUser = await userModel.create({userName,password:Hpassword,email});
     
